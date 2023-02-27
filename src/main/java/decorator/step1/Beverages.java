@@ -1,0 +1,30 @@
+package decorator.step1;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Beverages {
+    private final List<Beverage> beverages;
+    private Beverages(List<Beverage> beverages){
+        this.beverages = beverages;
+    }
+
+    public void add(Beverage beverage){
+        beverages.add(beverage);
+    }
+
+    public double getTotalCost(){
+        return beverages.stream()
+                .map(Beverage::getCost)
+                .reduce((total, cost) -> total + cost)
+                .orElse(.0);
+    }
+
+    public static Beverages empty(){
+        return new Beverages(new ArrayList<>());
+    }
+
+    public static Beverages of(List<Beverage> beverages){
+        return new Beverages(beverages);
+    }
+}
